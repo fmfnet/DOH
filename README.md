@@ -1,4 +1,4 @@
-# fmfnet/DOH
+# fmfnet/doh
 
 DNS over HTTPS client library for PHP
 
@@ -23,7 +23,7 @@ If you need a fast and reliable DNS name resolution, DOH provides a better solut
 Vía composer
 
 ``` bash
-$ composer require fmfnet/DOH
+$ composer require fmfnet/doh
 ```
 
 ## Usage
