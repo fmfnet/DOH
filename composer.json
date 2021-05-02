@@ -1,5 +1,5 @@
 {
-    "name": "fmfnet/DOH",
+    "name": "fmfnet/doh",
     "description": "DNS over HTTPS client library",
     "keywords": ["dns","DOH","resolver","DNSoverHTTPS"],
     "homepage": "https://github.com/fmfnet/DOH",
