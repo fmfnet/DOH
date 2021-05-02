@@ -2,6 +2,11 @@
 
 DNS over HTTPS client library for PHP
 
+## Status
+
+[![Version](https://poser.pugx.org/fmfnet/doh/version)](//packagist.org/packages/fmfnet/doh)
+[![License](https://poser.pugx.org/fmfnet/doh/license)](//packagist.org/packages/fmfnet/doh)
+
 ## Introduction
 
 DNS resolve is a well known function that is implemented in all operating systems, then, Why we need a different way to do it?
