@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__.'/../src/DOH.php';
 
-define('FMFNET_DOH_PROVIDER','cloudflare'); // This constant is optional
 $doh = new \fmfnet\DOH('cloudflare'); // The parameter is optional
 $resp = $doh->dns('www.google.com','A'); // Query with a single response
 echo "Response to A query:\n";
