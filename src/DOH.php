@@ -10,7 +10,7 @@
  * If not parameter is provided, default one will be used.
  * 
  * The default DNSoHTTPS provider can be supplied with an optional global
- * constant: FMFNET_DOH_PROVIDER. If the constant is not provided, 
+ * constant: SIRMONTI_DOH_PROVIDER. If the constant is not provided, 
  * hardcoded default is cloudflare.
  *
  * @author Francisco Monteagudo
@@ -20,7 +20,7 @@
  */
 declare(strict_types=1);
 
-namespace fmfnet;
+namespace sirmonti;
 
 use \Exception;
 use \InvalidArgumentException;
@@ -64,7 +64,7 @@ class DOH {
     function __construct(string $provider='')
     {
         if($provider=='') {
-            $provider=(defined('FMFNET_DOH_PROVIDER')) ? FMFNET_DOH_PROVIDER:self::DEFPROVIDER;
+            $provider=(defined('SIRMONTI_DOH_PROVIDER')) ? SIRMONTI_DOH_PROVIDER:self::DEFPROVIDER;
         }
 
         $this->url=(string)@self::PROVIDERS[$provider];
@@ -247,7 +247,7 @@ class DOH {
     public function __get($key)
     {
         if($key=='status') return $this->status;
-        trigger_error('Undefined property: fmfnet\DOH::$'.$key);
+        trigger_error('Undefined property: sirmonti\DOH::$'.$key);
         return null;
     }
 };
