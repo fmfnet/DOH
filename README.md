@@ -1,11 +1,11 @@
-# fmfnet/doh
+# sirmonti/doh
 
 DNS over HTTPS client library for PHP
 
 ## Status
 
-[![Version](https://poser.pugx.org/fmfnet/doh/version)](//packagist.org/packages/fmfnet/doh)
-[![License](https://poser.pugx.org/fmfnet/doh/license)](//packagist.org/packages/fmfnet/doh)
+[![Version](https://poser.pugx.org/sirmonti/doh/version)](//packagist.org/packages/sirmonti/doh)
+[![License](https://poser.pugx.org/sirmonti/doh/license)](//packagist.org/packages/sirmonti/doh)
 
 ## Introduction
 
@@ -23,7 +23,7 @@ If you need a fast and reliable DNS name resolution, DOH provides a better solut
 Vía composer
 
 ``` bash
-$ composer require fmfnet/doh
+$ composer require sirmonti/doh
 ```
 
 ## Usage
@@ -37,15 +37,15 @@ Functions and parameters:
 
 |function|Description|
 |---|---|
-|FMFNET_DOH_PROVIDER|Optional global constant to define a default provider|
+|SIRMONTI_DOH_PROVIDER|Optional global constant to define a default provider|
 |contructor($provider)|Create DOH object. The optional parameter "$provider" can be "cloudflare" or "google"|
 |dns($name,$type)|Resolve a DNS query. $name is the name to resolve and $type is the record type searched|
 
 Example code:
 
 ```php
-define('FMFNET_DOH_PROVIDER','cloudflare'); // This constant is optional
-$doh = new \fmfnet\DOH('cloudflare'); // The parameter is optional
+define('SIRMONTI_DOH_PROVIDER','cloudflare'); // This constant is optional
+$doh = new \sirmonti\DOH('cloudflare'); // The parameter is optional
 $resp = $doh->dns('www.google.com','A'); // Query with a single response
 echo "\nResponse A query:\n";
 print_r($resp);
