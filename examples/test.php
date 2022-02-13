@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__.'/../src/DOH.php';
 
-$doh = new \fmfnet\DOH('cloudflare'); // The parameter is optional
+$doh = new \sirmonti\DOH('cloudflare'); // The parameter is optional
 $resp = $doh->dns('www.google.com','A'); // Query with a single response
 echo "Response to A query:\n";
 print_r($resp);
