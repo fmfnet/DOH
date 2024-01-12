@@ -25,7 +25,7 @@ class DOH {
     private const DEFPROVIDER='cloudflare';
 
     // Constants for internal use
-    private const NAME='DOHPHPClient/1.0';
+    private const NAME='DOHPHPClient/2.0';
     private const RECTYPES=[
         'A'=>1,
         'NS'=>2,
