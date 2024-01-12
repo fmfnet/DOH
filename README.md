@@ -37,15 +37,15 @@ Functions and parameters:
 
 |function|Description|
 |---|---|
-|SIRMONTI_DOH_PROVIDER|Optional global constant to define a default provider|
+|DOH_PROVIDER|Optional global constant to define a default provider|
 |contructor($provider)|Create DOH object. The optional parameter "$provider" can be "cloudflare" or "google"|
 |dns($name,$type)|Resolve a DNS query. $name is the name to resolve and $type is the record type searched|
 
 Example code:
 
 ```php
-define('SIRMONTI_DOH_PROVIDER','cloudflare'); // This constant is optional
-$doh = new \sirmonti\DOH('cloudflare'); // The parameter is optional
+define('DOH_PROVIDER','cloudflare'); // This constant is optional
+$doh = new DOH('cloudflare'); // The parameter is optional
 $resp = $doh->dns('www.google.com','A'); // Query with a single response
 echo "\nResponse A query:\n";
 print_r($resp);

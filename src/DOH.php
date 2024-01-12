@@ -10,7 +10,7 @@
  * If not parameter is provided, default one will be used.
  * 
  * The default DNSoHTTPS provider can be supplied with an optional global
- * constant: SIRMONTI_DOH_PROVIDER. If the constant is not provided, 
+ * constant: DOH_PROVIDER. If the constant is not provided, 
  * hardcoded default is cloudflare.
  *
  * @author Francisco Monteagudo
@@ -19,11 +19,6 @@
  *
  */
 declare(strict_types=1);
-
-namespace sirmonti;
-
-use \Exception;
-use \InvalidArgumentException;
 
 class DOH {
     // Default values
@@ -64,12 +59,12 @@ class DOH {
     function __construct(string $provider='')
     {
         if($provider=='') {
-            $provider=(defined('SIRMONTI_DOH_PROVIDER')) ? SIRMONTI_DOH_PROVIDER:self::DEFPROVIDER;
+            $provider=(defined('DOH_PROVIDER')) ? DOH_PROVIDER:self::DEFPROVIDER;
         }
 
         $this->url=(string)@self::PROVIDERS[$provider];
         if($this->url=='')
-            throw new InvalidArgumentException('Invalid provider');
+            $this->url=(string)@self::PROVIDERS[self::DEFPROVIDER];
 
     }
 
@@ -247,7 +242,7 @@ class DOH {
     public function __get($key)
     {
         if($key=='status') return $this->status;
-        trigger_error('Undefined property: sirmonti\DOH::$'.$key);
+        trigger_error('Undefined property: DOH::$'.$key);
         return null;
     }
 };

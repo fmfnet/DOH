@@ -13,9 +13,7 @@
         }
     ],
     "autoload": {
-        "psr-4":{
-            "sirmonti\\":"src/"
-        }
+        "files": ["src/DOH.php"]
     },
     "minimum-stability": "stable",
     "require": {
