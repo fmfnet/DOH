@@ -36,17 +36,25 @@ class DOH {
         'TXT'=>16,
         'AAAA'=>28,
         'SRV'=>33,
+        'DS'=>43,
         'SSHFP'=>44,
+        'DNSKEY'=>48,
         'TLSA'=>52,
         'CAA'=>257
     ];
 
+    private const DSALGONAMES=[
+        'DELETE','RSAMD5','DH','DSA','RSASHA1','DSA-NSEC3-SHA1',
+        'RSASHA1-NSEC3-SHA1','RSASHA256','RSASHA512','ECC-GOST',
+        'EC3P256SHA256','EC3P384SHA384','ED25519','ED448'
+    ];
+    private const DSALGOIDS=[0,1,2,3,5,6,7,8,10,12,13,14,15,16];
     private const PROVIDERS=[
         'cloudflare'=>'https://cloudflare-dns.com/dns-query?type=%s&name=%s',
         'google'=>'https://dns.google/resolve?type=%s&name=%s'
     ];
 
-    private int $provid;
+    private string $provider;
     private string $url;
     private int $status;
 
@@ -61,7 +69,7 @@ class DOH {
         if($provider=='') {
             $provider=(defined('DOH_PROVIDER')) ? DOH_PROVIDER:self::DEFPROVIDER;
         }
-
+        $this->provider=$provider;
         $this->url=(string)@self::PROVIDERS[$provider];
         if($this->url=='')
             $this->url=(string)@self::PROVIDERS[self::DEFPROVIDER];
@@ -124,6 +132,19 @@ class DOH {
             $data[]=$prio.' '.$host;
         }
 
+        return $data;
+    }
+
+    private function procKEYS(array $resp):array {
+        $data=[];
+        foreach($resp as $r) {
+            switch($r->type) {
+                case 43:
+                case 48:
+                    $data[]=str_replace(self::DSALGONAMES,self::DSALGOIDS,$r->data);
+                    break;
+            }
+        }
         return $data;
     }
 
@@ -235,6 +256,11 @@ class DOH {
         switch($tipo) {
             case 'NS':return $this->procNS($resp->Answer);
             case 'MX':return $this->procMX($resp->Answer);
+            case 'DS':
+            case 'DNSKEY':
+                if($this->provider=='cloudflare')
+                    return $this->procKEYS($resp->Answer);
+                break;
         }
 
         return $this->procGEN($resp->Answer,$tipo);

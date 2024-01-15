@@ -108,7 +108,7 @@ and the record type we are asking for.
 
 When parameters have an invalid value, an InvalidValurException will be raised
 
-Valid record types: NS, MX, TXT, A, AAAA, CNAME, SPF, SOA, PTR, SRV
+Valid record types: NS, MX, TXT, A, AAAA, CNAME, SPF, SOA, PTR, SRV, DS, DNSKEY
 
 The response is an array with the returned responses. If the query don't have a
 valid response or an error ocurrs, the call will return an empty array and set

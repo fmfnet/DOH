@@ -16,3 +16,12 @@ $resp = $doh->dns('nonexistentdomain.test','TXT'); // Query with an invalid resp
 echo "\nResponse to bogus query:\n";
 print_r($resp);
 printf("DNS response status code: %d\n",$doh->status);
+
+$resp = $doh->dns('cloudflare.com','DS'); // Query for a DNSSEC record
+echo "\nReponse to DS query:\n";
+print_r($resp);
+
+$resp = $doh->dns('cloudflare.com','DNSKEY'); // Query for a DNSSEC record
+echo "\nReponse to DNSKEY query:\n";
+print_r($resp);
+
