@@ -10,11 +10,11 @@ DNS over HTTPS client library for PHP
 ## Introduction
 
 DNS resolve is a well known function that is implemented in all operating systems, then, Why we need a different way to do it?
-The main reason is privacy, estandar DNS protocol don't encrypt connections, which means DNS requests can be spied and forged.
+The main reason is privacy, standard DNS protocol don't encrypt connections, which means DNS requests can be spied and forged.
 
-But there are other reasons; first, DOH is very fast, more fast than a lot of local servers. This is not verry surprisingly if you consider that cloudflare
-and google (the main DOH providers) have huge network infraestructures. But there are more, DOH provides a more descriptive errors. A network connections error,
-something that standar DNS protocol can missinterpret as a non existent record, DOH provides the correct error reason.
+But there are other reasons; first, DOH is very fast, more fast than a lot of local servers. This is not very surprisingly if you consider that cloudflare
+and google (the main DOH providers) have huge network infraestructures. But there are more, DOH provides a more descriptive errors. For example,
+standard DNS servers can misinterpret network errors as nonexistent records. DOH will correctly report the error.
 
 If you need a fast and reliable DNS name resolution, DOH provides a better solution than standard DNS servers.
 
