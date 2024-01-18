@@ -17,7 +17,7 @@ declare(strict_types=1);
  * @see https://github.com/sirmonti/doh/ DOH github project
  * 
  * @author Francisco Monteagudo <francisco@monteagudo.net>
- * @version 2.0.0
+ * @version 2.1.0
  * @license https://opensource.org/licenses/MIT (MIT License)
  * @copyright (c) 2024, Francisco Monteagudo
  *
