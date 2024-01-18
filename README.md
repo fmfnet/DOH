@@ -1,11 +1,11 @@
 # DOH - DNS over HTTPS client library for PHP
----
+
 
 [![Version](https://poser.pugx.org/sirmonti/doh/version)](//packagist.org/packages/sirmonti/doh)
 [![License](https://poser.pugx.org/sirmonti/doh/license)](//packagist.org/packages/sirmonti/doh)
 
 ## Introduction
----
+
 DNS resolve is a well known function that is implemented in all operating systems, then, Why we need a different way to do it?
 The main reason is privacy, standard DNS protocol don't encrypt connections, which means DNS requests can be spied and forged.
 
@@ -16,7 +16,7 @@ standard DNS servers can misinterpret network errors as nonexistent records. DOH
 If you need a fast and reliable DNS name resolution, DOH provides a better solution than standard DNS servers.
 
 ## Install
----
+
 Vía composer
 
 ``` bash
@@ -24,7 +24,7 @@ $ composer require sirmonti/doh
 ```
 
 ## Usage
----
+
 Actually, the library supports two DoH providers: "cloudflare" and "google".
 The providers are accessed through these URIs:
 - cloudflare: https://cloudflare-dns.com/dns-query
@@ -46,7 +46,7 @@ The DoH provider is taken in this order:
   editing the class constant DEFPROVIDER in the source code
 
 ## DNS resolution
----
+
 The method "dns($name,$type)" execute a DNS query. The query return an array with the
 responses. In case of error the function returns an empty array and set "status"
 attribute with the error code. The parameters are the name we want resolve
@@ -61,16 +61,16 @@ valid response or an error ocurrs, the call will return an empty array and set
 the "status" property to the error code. If all is ok, the status code will be zero.
 
 state code values:
-    - 0: OK
-    - 1: Empty response. There are not response to this query.
-    - 2: The DNS servers for this domain are misconfigured
-    - 3: The domain does not exist
-    - 4: Network error
-    - 5: Lame response
- - 10XX: Values above 1000 contains error code returned by DNS server
+- 0: OK
+- 1: Empty response. There are not response to this query.
+- 2: The DNS servers for this domain are misconfigured
+- 3: The domain does not exist
+- 4: Network error
+- 5: Lame response
+- 10XX: Values above 1000 contains error code returned by DNS server
 
 ## Examples
----
+
 ```php
 $doh = new DOH('cloudflare'); // Will use cloudflare as resolver
 $resp = $doh->dns('www.google.com','A'); // Query with a single response
@@ -135,5 +135,5 @@ DNS response status code: 3
 ```
 
 ## LICENSE
----
+
 This library is licensed under [MIT LICENSE](LICENSE)
