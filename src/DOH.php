@@ -98,7 +98,6 @@ class DOH {
     {
         if(!preg_match('/^\\\# [0-9a-fA-F]+ (.+)$/',$data,$info))
             return '';
-
         $tmp=explode(' ',$info[1]);
         switch($type) {
             case 'CAA':
@@ -117,6 +116,7 @@ class DOH {
                 $v3=hexdec($tmp[2]);
                 return sprintf('%d %d %d %s',$v1,$v2,$v3,implode('',array_slice($tmp,3)));
         }
+        return '';
     }
 
     /** @ignore */
@@ -246,7 +246,7 @@ class DOH {
         if(!isset(self::RECTYPES[$tipo]))
             throw new InvalidArgumentException(_('Invalid record type'),100);
         if($tipo=='PTR') {
-            $dominio=$this->iIPtoDNS($dominio);
+            $dominio=$this->IPtoDNS($dominio);
             if($dominio=='') {
                 $this->status=101;
                 throw new InvalidArgumentException(_('Invalid IP address'),101);
