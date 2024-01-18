@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This class implements a DNS resolver that asks a DNS over HTTPS service instead of a regular DNS server.
  * 
@@ -13,19 +14,27 @@
  * constant: DOH_PROVIDER. If the constant is not provided, 
  * hardcoded default is cloudflare.
  *
- * @author Francisco Monteagudo
- * @version 1.0.0
+ * @see https://github.com/sirmonti/doh/ DOH github project
+ * 
+ * @author Francisco Monteagudo <francisco@monteagudo.net>
+ * @version 2.0.0
  * @license https://opensource.org/licenses/MIT (MIT License)
+ * @copyright (c) 2024, Francisco Monteagudo
  *
+ * @property-read int $status Get the status code for the last operation
  */
-declare(strict_types=1);
-
 class DOH {
-    // Default values
-    private const DEFPROVIDER='cloudflare';
+    /**
+     * Default DOH provider. Valid values are "cloudflare" or "google".
+     * You can edit this constant, but we recommend to use the global
+     * DOH_PROVIDER constant.
+     */
+    const DEFPROVIDER='cloudflare';
 
     // Constants for internal use
+    /** @ignore */
     private const NAME='DOHPHPClient/2.0';
+    /** @ignore */
     private const RECTYPES=[
         'A'=>1,
         'NS'=>2,
@@ -43,19 +52,25 @@ class DOH {
         'CAA'=>257
     ];
 
+    /** @ignore */
     private const DSALGONAMES=[
         'DELETE','RSAMD5','DH','DSA','RSASHA1','DSA-NSEC3-SHA1',
         'RSASHA1-NSEC3-SHA1','RSASHA256','RSASHA512','ECC-GOST',
         'EC3P256SHA256','EC3P384SHA384','ED25519','ED448'
     ];
+    /** @ignore */
     private const DSALGOIDS=[0,1,2,3,5,6,7,8,10,12,13,14,15,16];
+    /** @ignore */
     private const PROVIDERS=[
         'cloudflare'=>'https://cloudflare-dns.com/dns-query?type=%s&name=%s',
         'google'=>'https://dns.google/resolve?type=%s&name=%s'
     ];
 
+    /** @ignore */
     private string $provider;
+    /** @ignore */
     private string $url;
+    /** @ignore */
     private int $status;
 
     /**
@@ -73,9 +88,12 @@ class DOH {
         $this->url=(string)@self::PROVIDERS[$provider];
         if($this->url=='')
             $this->url=(string)@self::PROVIDERS[self::DEFPROVIDER];
+        if($this->url=='')
+            throw new InvalidArgumentException (_('Invalid DOH provider'));
 
     }
 
+    /** @ignore */
     private function decode(string $data,string $type):string
     {
         if(!preg_match('/^\\\# [0-9a-fA-F]+ (.+)$/',$data,$info))
@@ -101,6 +119,7 @@ class DOH {
         }
     }
 
+    /** @ignore */
     private function procNS(array $resp):array
     {
         $data=[];
@@ -118,6 +137,7 @@ class DOH {
         return $data;
     }
 
+    /** @ignore */
     private function procMX(array $resp):array
     {
         $data=[];
@@ -135,6 +155,7 @@ class DOH {
         return $data;
     }
 
+    /** @ignore */
     private function procKEYS(array $resp):array {
         $data=[];
         foreach($resp as $r) {
@@ -148,6 +169,7 @@ class DOH {
         return $data;
     }
 
+    /** @ignore */
     private function procGEN(array $resp, string $tipo):array
     {
         $idt=self::RECTYPES[$tipo];
@@ -166,59 +188,68 @@ class DOH {
     }
 
     /**
+     * Convert an IPv4 or IPv6 address to a DNS name valid for a PTR request.
+     * 
+     * This is a static function, so it can be used independently
+     * 
+     * @param string $ip IP address to convert
+     * @return string DNS name representing the IP
+     */
+    static function IPtoDNS(string $ip):string {
+        if(preg_match('/^([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)$/',$ip,$r)) {
+            $dns=sprintf('%d.%d.%d.%d.in-addr.arpa',$r[4],$r[3],$r[2],$r[1]);
+        } elseif(filter_var($ip,FILTER_VALIDATE_IP,FILTER_FLAG_IPV6)) {
+            $d=@unpack('H*',inet_pton($ip))[1];
+            if(strlen($d)!=32) {
+                return '';
+            }
+            $dns=implode('.',str_split(strrev($d))).'.ip6.arpa';
+        } else {
+            return '';
+        }
+        return $dns;
+    }
+    /**
      * Execute a DNS query. The query return an array with the responses. In case
      * of error the function returns an empty array and set "status" attribute
      * with the error code.
      * 
      * When parameters have an invalid value, an InvalidValurException will be raised
      * 
-     * Valid record types: NS, MX, TXT, A, AAAA, CNAME, SPF, SOA, PTR, SRV
+     * Valid record types: NS, MX, TXT, A, AAAA, CNAME, SPF, SOA, PTR, SRV, DS, DNSKEY
      * 
      * state response codes:
      *
-     *    0: OK
+     *    - 0: OK
+     *    - 1: Empty response. There are not response to this query.
+     *    - 2: The DNS servers for this domain are misconfigured
+     *    - 3: The domain does not exist
+     *    - 4: Network error
+     *    - 5: Lame response
+     *  - 101: Invalid IP address provided
+     * - 10XX: Values above 1000 contains error code returned by DNS server
      *
-     *    1: Empty response. There are not response to this query.
-     *
-     *    2: The DNS servers for this domain are misconfigured
-     *
-     *    3: The domain does not exist
-     *
-     *    4: Network error
-     *
-     *    5: Lame response
+     *  This errors generate an exception of type InvalidArgumentException with
+     * the following codes:
      * 
-     * 10XX: Values above 1000 contains error code returned by DNS server
-     *
-     *  This errors generate an exception of type InvalidArgumentException 
-     * 
-     *  100: Invalid record type
-     * 
-     *  101: Invalid IP address
+     *  - 100: Invalid record type
+     *  - 101: Invalid IP address
      *
      * @param  string $dominio Dominio a comprobar
      * @param  string $tipo Tipo de registro
-     * @return array  array con el resultado de la operación
+     * @return array<string,string>  array con el resultado de la operación
      * @throws InvalidArgumentException on no valid parameters
      */
     public function dns(string $dominio,string $tipo):array
     {
         $this->status=0;
         if(!isset(self::RECTYPES[$tipo]))
-            throw new InvalidArgumentException('Invalid record type',100);
+            throw new InvalidArgumentException(_('Invalid record type'),100);
         if($tipo=='PTR') {
-            if(preg_match('/^([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)$/',$dominio,$r)) {
-                $dominio=sprintf('%d.%d.%d.%d.in-addr.arpa',$r[4],$r[3],$r[2],$r[1]);
-            } elseif(filter_var($dominio,FILTER_VALIDATE_IP,FILTER_FLAG_IPV6)) {
-                $d=@unpack('H*',inet_pton($dominio))[1];
-                if(strlen($d)!=32) {
-                    $this->status=102;
-                    throw new InvalidArgumentException('Invalid IP address',101);
-                }
-                $dominio=implode('.',str_split(strrev($d))).'.ip6.arpa';
-            } else {
-                $this->status=102;
-                throw new InvalidArgumentException('Invalid IP address',101);
+            $dominio=$this->iIPtoDNS($dominio);
+            if($dominio=='') {
+                $this->status=101;
+                throw new InvalidArgumentException(_('Invalid IP address'),101);
             }
         }
         $opts=[
@@ -265,6 +296,8 @@ class DOH {
 
         return $this->procGEN($resp->Answer,$tipo);
     }
+
+    /** @ignore */
     public function __get($key)
     {
         if($key=='status') return $this->status;
