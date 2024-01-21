@@ -20,7 +20,7 @@ If you need a fast and reliable DNS name resolution, DOH provides a better solut
 Vía composer
 
 ``` bash
-$ composer require sirmonti/doh
+composer require sirmonti/doh
 ```
 
 ## Usage
@@ -38,6 +38,7 @@ Functions and parameters:
 |contructor($provider)|Create DOH object. The optional parameter "$provider" can be "cloudflare" or "google"|
 |dns($name,$type)|Resolve a DNS query. $name is the name to resolve and $type is the record type searched|
 |$status|This property stores the status code for the last operation|
+|getStatus()|If you prefer to get the status code using a method call|
 
 The DoH provider is taken in this order:
 - The constructor parameter
@@ -52,7 +53,9 @@ responses. In case of error the function returns an empty array and set "status"
 attribute with the error code. The parameters are the name we want resolve
 and the record type we are asking for.
 
-When parameters have an invalid value, an InvalidValurException will be raised
+When parameters have an invalid value, an InvalidValurException will be fired,
+network or DNS error doesn't fire any exception, error will be reported with an
+status code.
 
 Valid record types: NS, MX, TXT, A, AAAA, CNAME, SPF, SOA, PTR, SRV, DS, DNSKEY
 
@@ -60,13 +63,15 @@ The response is an array with the returned responses. If the query don't have a
 valid response or an error ocurrs, the call will return an empty array and set
 the "status" property to the error code. If all is ok, the status code will be zero.
 
-state code values:
+status code values:
 - 0: OK
 - 1: Empty response. There are not response to this query.
 - 2: The DNS servers for this domain are misconfigured
 - 3: The domain does not exist
 - 4: Network error
 - 5: Lame response
+- 100: Invalid record type provided
+- 101: Invalid IP address provided
 - 10XX: Values above 1000 contains error code returned by DNS server
 
 ## Examples

@@ -17,7 +17,7 @@ declare(strict_types=1);
  * @see https://github.com/sirmonti/doh/ DOH github project
  * 
  * @author Francisco Monteagudo <francisco@monteagudo.net>
- * @version 2.1.0
+ * @version 2.5.0
  * @license https://opensource.org/licenses/MIT (MIT License)
  * @copyright (c) 2024, Francisco Monteagudo
  *
@@ -33,7 +33,24 @@ class DOH {
 
     // Constants for internal use
     /** @ignore */
-    private const NAME='DOHPHPClient/2.0';
+    private const NAME='DOHPHPClient/2.5';
+
+    /** @ignore */
+    private const PROVIDERS = [
+        'cloudflare'=>[
+            'url' => 'https://%s/dns-query?type=%s&name=%s',
+            'host' => 'cloudflare-dns.com',
+            'ipv4' => ['104.16.248.249', '104.16.249.249'],
+            'ipv6' => ['2606:4700::6810:f9f9', '2606:4700::6810:f8f9']
+        ],
+        'google'=>[
+            'url' => 'https://%s/resolve?type=%s&name=%s',
+            'host' => 'dns.google',
+            'ipv4' => ['8.8.8.8', '8.8.4.4'],
+            'ipv6' => ['2001:4860:4860::8888', '2001:4860:4860::8844']
+        ]
+    ];
+
     /** @ignore */
     private const RECTYPES=[
         'A'=>1,
@@ -60,16 +77,11 @@ class DOH {
     ];
     /** @ignore */
     private const DSALGOIDS=[0,1,2,3,5,6,7,8,10,12,13,14,15,16];
-    /** @ignore */
-    private const PROVIDERS=[
-        'cloudflare'=>'https://cloudflare-dns.com/dns-query?type=%s&name=%s',
-        'google'=>'https://dns.google/resolve?type=%s&name=%s'
-    ];
 
     /** @ignore */
     private string $provider;
     /** @ignore */
-    private string $url;
+    private array $pdata;
     /** @ignore */
     private int $status;
 
@@ -84,13 +96,12 @@ class DOH {
         if($provider=='') {
             $provider=(defined('DOH_PROVIDER')) ? DOH_PROVIDER:self::DEFPROVIDER;
         }
-        $this->provider=$provider;
-        $this->url=(string)@self::PROVIDERS[$provider];
-        if($this->url=='')
-            $this->url=(string)@self::PROVIDERS[self::DEFPROVIDER];
-        if($this->url=='')
+        $this->pdata=(array)@self::PROVIDERS[$provider];
+        if(count($this->pdata)==0)
+            $this->pdata=(array)@self::PROVIDERS[self::DEFPROVIDER];
+        if(count($this->pdata)==0)
             throw new InvalidArgumentException (_('Invalid DOH provider'));
-
+        $this->provider=$provider;
     }
 
     /** @ignore */
@@ -170,16 +181,16 @@ class DOH {
     }
 
     /** @ignore */
-    private function procGEN(array $resp, string $tipo):array
+    private function procGEN(array $resp, string $type):array
     {
-        $idt=self::RECTYPES[$tipo];
+        $idt=self::RECTYPES[$type];
         $data=[];
         foreach($resp as $r) {
             if($r->type!=$idt)
                 continue;
 
             if(substr($r->data,0,3)=='\# ') {
-                $txt=$this->decode($r->data,$tipo);
+                $txt=$this->decode($r->data,$type);
                 if($txt!='') $data[]=$txt;
             } else $data[]=$r->data;
         }
@@ -209,6 +220,15 @@ class DOH {
         }
         return $dns;
     }
+
+    /**
+     * Get the status code for the last query
+     * 
+     * @return int The status code for the last query
+     */
+    function getStatus():int {
+        return $this->status;
+    }
     /**
      * Execute a DNS query. The query return an array with the responses. In case
      * of error the function returns an empty array and set "status" attribute
@@ -235,17 +255,19 @@ class DOH {
      *  - 100: Invalid record type
      *  - 101: Invalid IP address
      *
-     * @param  string $dominio Dominio a comprobar
-     * @param  string $tipo Tipo de registro
-     * @return array<string,string>  array con el resultado de la operación
+     * @param  string $dominio Name to resolver
+     * @param  string $type Register type
+     * @return array<string,string>  array Query result
      * @throws InvalidArgumentException on no valid parameters
      */
-    public function dns(string $dominio,string $tipo):array
+    public function dns(string $dominio,string $type):array
     {
         $this->status=0;
-        if(!isset(self::RECTYPES[$tipo]))
+        if(!isset(self::RECTYPES[$type])) {
+            $this->status=100;
             throw new InvalidArgumentException(_('Invalid record type'),100);
-        if($tipo=='PTR') {
+        }
+        if($type=='PTR') {
             $dominio=$this->IPtoDNS($dominio);
             if($dominio=='') {
                 $this->status=101;
@@ -254,21 +276,35 @@ class DOH {
         }
         $opts=[
             'http'=>[
+                    'ignore_errors'=>true,
                     'method'=>'GET',
                     'header'=>['accept: application/dns-json',
-                    'User-Agent: '.self::NAME
+                    'User-Agent: '.self::NAME,
+                    'Host: '.$this->pdata['host']
                 ]
+            ],
+            'ssl'=>[
+                'SNI_enabled'=>true,
+                'peer_name'=>$this->pdata['host']
             ]
         ];
 
+        $ips=$this->pdata['ipv4'];
+        $ip=$ips[mt_rand(0,count($ips)-1)];
         $ctx=stream_context_create($opts);
-        $resp=json_decode((string)@file_get_contents(sprintf($this->url,$tipo,urlencode($dominio)),false,$ctx));
-
-        if(!is_object($resp)||!isset($resp->Status)) {
+        $resp=json_decode((string)@file_get_contents(sprintf($this->pdata['url'],$ip,$type,urlencode($dominio)),false,$ctx));
+        if(!is_object($resp)||!isset($resp->Status)||(!is_array($http_response_header))) {
             $this->status=4;
             return [];
         }
-
+        if(!preg_match('/^HTTP\/[0-9]+\.[0-9]+\ ([0-9]{3})\ (.+)$/', $http_response_header[0], $status)) {
+            $this->status=4;
+            return [];
+        }
+        if((int)@$status[1]!=200) {
+            $this->status=4;
+            return [];
+        }
         if($resp->Status!=0) {
             switch($resp->Status) {
                 case 2:
@@ -284,7 +320,7 @@ class DOH {
             return [];
         }
 
-        switch($tipo) {
+        switch($type) {
             case 'NS':return $this->procNS($resp->Answer);
             case 'MX':return $this->procMX($resp->Answer);
             case 'DS':
@@ -294,7 +330,7 @@ class DOH {
                 break;
         }
 
-        return $this->procGEN($resp->Answer,$tipo);
+        return $this->procGEN($resp->Answer,$type);
     }
 
     /** @ignore */

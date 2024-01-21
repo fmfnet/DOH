@@ -15,7 +15,7 @@ printf("DNS response status code: %d\n",$doh->status);
 $resp = $doh->dns('nonexistentdomain.test','TXT'); // Query with an invalid response
 echo "\nResponse to bogus query:\n";
 print_r($resp);
-printf("DNS response status code: %d\n",$doh->status);
+printf("DNS response status code: %d\nVia getStatus() method: %d",$doh->status,$doh->getStatus());
 
 $resp = $doh->dns('cloudflare.com','DS'); // Query for a DNSSEC record
 echo "\nReponse to DS query:\n";
