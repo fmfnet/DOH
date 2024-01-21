@@ -104,8 +104,6 @@ class DOH {
         }
         $this->pdata = (array) @self::PROVIDERS[$provider];
         if (count($this->pdata) == 0)
-            $this->pdata = (array) @self::PROVIDERS[self::DEFPROVIDER];
-        if (count($this->pdata) == 0)
             throw new InvalidArgumentException(_('Invalid DOH provider'));
         $this->provider = $provider;
     }
@@ -255,10 +253,9 @@ class DOH {
      *    - 3: The domain does not exist
      *    - 4: Network error
      *    - 5: Lame response
-     *  - 101: Invalid IP address provided
      * - 10XX: Values above 1000 contains error code returned by DNS server
      *
-     *  This errors generate an exception of type InvalidArgumentException with
+     * Input parameter errors generate an exception of type InvalidArgumentException with
      * the following codes:
      * 
      *  - 100: Invalid record type
