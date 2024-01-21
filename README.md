@@ -74,6 +74,9 @@ status code values:
 - 101: Invalid IP address provided
 - 10XX: Values above 1000 contains error code returned by DNS server
 
+On invalid parameters an InvalidArgumentException will be fired with
+ the status codes 100 or 101.
+
 ## Examples
 
 ```php

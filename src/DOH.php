@@ -19,6 +19,12 @@ class DOH {
     /** @ignore */
     private string $provider;
 
+    /**
+     * Build DOH object
+     * 
+     * @param string $provider (optional) DNS over HTTPS provider to use
+     * @throws InvalidArgumentException if the $provider contains an invalid value
+     */
     function __construct(string $provider) {
         if ($provider == '') {
             $provider = (defined('DOH_PROVIDER')) ? DOH_PROVIDER : self::DEFPROVIDER;

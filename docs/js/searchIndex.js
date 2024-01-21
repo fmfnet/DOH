@@ -8,7 +8,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\DOH\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "Build\u0020DOH\u0020object",
             "url": "classes/DOH.html#method___construct"
         },                {
             "fqsen": "\\DOH\u003A\u003AiPtoDNS\u0028\u0029",

@@ -194,7 +194,7 @@ abstract class DOHBase {
      * 
      * Valid record types: NS, MX, TXT, A, AAAA, CNAME, SPF, SOA, PTR, SRV, DS, DNSKEY
      * 
-     * state response codes:
+     * status response codes:
      *
      *    - 0: OK
      *    - 1: Empty response. There are not response to this query.
@@ -202,13 +202,12 @@ abstract class DOHBase {
      *    - 3: The domain does not exist
      *    - 4: Network error
      *    - 5: Lame response
-     * - 10XX: Values above 1000 contains error code returned by DNS server
-     *
-     *  Invalid argument errors generate an exception of type InvalidArgumentException with
-     * one of the following codes:
-     * 
      *  - 100: Invalid record type
      *  - 101: Invalid IP address
+     * - 10XX: Values above 1000 contains error code returned by DNS server
+     *
+     *  Invalid argument errors fires an InvalidArgumentException with the
+     * status codes 100 or 101
      *
      * @param  string $domain Name to resolve
      * @param  string $type Record type to ask for
