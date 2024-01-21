@@ -25,8 +25,10 @@ declare(strict_types=1);
  */
 abstract class DOHBase {
     // Constants for internal use
+
     /** @ignore */
     private const NAME = 'DOHPHPClient/3.0';
+
     /** @ignore */
     private const RECTYPES = [
         'A' => 1,
@@ -44,21 +46,25 @@ abstract class DOHBase {
         'TLSA' => 52,
         'CAA' => 257
     ];
+
     /** @ignore */
     private const DSALGONAMES = [
         'DELETE', 'RSAMD5', 'DH', 'DSA', 'RSASHA1', 'DSA-NSEC3-SHA1',
         'RSASHA1-NSEC3-SHA1', 'RSASHA256', 'RSASHA512', 'ECC-GOST',
         'EC3P256SHA256', 'EC3P384SHA384', 'ED25519', 'ED448'
     ];
+
     /** @ignore */
     private const DSALGOIDS = [0, 1, 2, 3, 5, 6, 7, 8, 10, 12, 13, 14, 15, 16];
 
     /** @ignore */
-    protected static string $providername='';
+    protected static string $providername = '';
+
     /** @ignore */
-    protected static array $provider=[];
+    protected static array $provider = [];
+
     /** @ignore */
-    private static int $status=0;
+    private static int $status = 0;
 
     /** @ignore */
     private static function decode(string $data, string $type): string {
@@ -138,15 +144,15 @@ abstract class DOHBase {
     }
 
     /** @ignore */
-    private static function procGEN(array $resp, string $tipo): array {
-        $idt = self::RECTYPES[$tipo];
+    private static function procGEN(array $resp, string $type): array {
+        $idt = self::RECTYPES[$type];
         $data = [];
         foreach ($resp as $r) {
             if ($r->type != $idt)
                 continue;
 
             if (substr($r->data, 0, 3) == '\# ') {
-                $txt = self::decode($r->data, $tipo);
+                $txt = self::decode($r->data, $type);
                 if ($txt != '')
                     $data[] = $txt;
             } else
@@ -182,7 +188,7 @@ abstract class DOHBase {
      * 
      * @return int Status for the last operacion
      */
-    static function getStatus():int {
+    static function getStatus(): int {
         return self::$status;
     }
 
@@ -212,20 +218,20 @@ abstract class DOHBase {
      *  - 100: Invalid record type
      *  - 101: Invalid IP address
      *
-     * @param  string $dominio Dominio a comprobar
-     * @param  string $tipo Tipo de registro
-     * @param string $how Indicates whether the connection will be via IPv4 or IPv6
+     * @param  string $domain Name to resolve
+     * @param  string $type Record type to ask
+     * @param string $how (optional) Indicates whether the connection will be via IPv4 or IPv6 (default is IPv4)
      * @return array<string,string>  array con el resultado de la operación
      * @throws InvalidArgumentException on no valid parameters
      */
-    protected static function dns(string $dominio, string $tipo,string $how): array {
-        $how=strtolower(trim($how));
+    protected static function dns(string $domain, string $type, string $how): array {
+        $how = strtolower(trim($how));
         self::$status = 0;
-        if (!isset(self::RECTYPES[$tipo]))
+        if (!isset(self::RECTYPES[$type]))
             throw new InvalidArgumentException(_('Invalid record type'), 100);
-        if ($tipo == 'PTR') {
-            $dominio = self::IPtoDNS($dominio);
-            if ($dominio == '') {
+        if ($type == 'PTR') {
+            $domain = self::IPtoDNS($domain);
+            if ($domain == '') {
                 self::$status = 101;
                 throw new InvalidArgumentException(_('Invalid IP address'), 101);
             }
@@ -240,21 +246,21 @@ abstract class DOHBase {
                 ]
             ],
             'ssl' => [
-                'SNI_enabled'=>true,
-                'peer_name'=>self::$provider['host']
-            ]                
+                'SNI_enabled' => true,
+                'peer_name' => self::$provider['host']
+            ]
         ];
-        switch($how) {
+        switch ($how) {
             default:
             case 'ipv4':
-                $ips=self::$provider['ipv4'];
+                $ips = self::$provider['ipv4'];
                 break;
             case 'ipv6':
-                $ips=self::$provider['ipv6'];
+                $ips = self::$provider['ipv6'];
                 break;
         }
-        $ip=$ips[mt_rand(0,count($ips)-1)];
-        $url=sprintf(self::$provider['url'],$ip,$tipo,urlencode($dominio));
+        $ip = $ips[mt_rand(0, count($ips) - 1)];
+        $url = sprintf(self::$provider['url'], $ip, $type, urlencode($domain));
         $ctx = stream_context_create($opts);
         $resp = json_decode((string) @file_get_contents($url, false, $ctx));
 
@@ -278,7 +284,7 @@ abstract class DOHBase {
             return [];
         }
 
-        switch ($tipo) {
+        switch ($type) {
             case 'NS':return self::procNS($resp->Answer);
             case 'MX':return self::procMX($resp->Answer);
             case 'DS':
@@ -288,8 +294,6 @@ abstract class DOHBase {
                 break;
         }
 
-        return self::procGEN($resp->Answer, $tipo);
+        return self::procGEN($resp->Answer, $type);
     }
 }
-
-

@@ -14,15 +14,16 @@ class DOHCF extends DOHBase {
     ];
 
     /**
+     * @see DOHBase::dns
      * 
-     * @param string $dominio
-     * @param string $type
-     * @param string $how
+     * @param string $domain Name to resolve
+     * @param string $type Record type
+     * @param string $how (optional) Ask vía IPv4 or IPv6 (Default via IPv4)
      * @return array
      */
-    static function dns(string $dominio, string $type,string $how='ipv4'): array {
-        self::$providername='cloudflare';
+    static function dns(string $dominio, string $type, string $how = 'ipv4'): array {
+        self::$providername = 'cloudflare';
         self::$provider = self::PROVIDER;
-        return parent::dns($dominio, $type,$how);
+        return parent::dns($dominio, $type, $how);
     }
 }
