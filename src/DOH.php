@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 /**
  * Wrapper class to provide compatibility with old software
+ * 
+ * @property-read int $status Status code for the last query. Deprecated, use instead {@see DOH::getStatus()}
  */
 class DOH {
 
@@ -32,14 +34,27 @@ class DOH {
     }
 
     /**
-     * @see DOHBase::IPtoDNS
+     * Convert IP address to a DNS representation
+     * 
+     * Inhrerited from {@see DOHBase::IPtoDNS()}
+     * 
+     * @param string $ip IP address to convert
+     * @return string DNS name representing the IP
      */
     static function iPtoDNS(string $ip): string {
         return DOHBase::IPtoDNS($ip);
     }
 
     /**
-     * @see DOHBase::dns
+     * Execute a DNS query
+     * 
+     * Inherited from {@see DOHBase::dns()}
+     * 
+     * @param  string $domain Name to resolve
+     * @param  string $type Record type to ask for
+     * @param string $how (optional) Indicates whether the connection will be via IPv4 or IPv6 (default is IPv4)
+     * @return array<string,string>  array con el resultado de la operación
+     * @throws InvalidArgumentException on no valid parameters
      */
     function dns(string $domain, string $type, string $how = 'ipv4'): array {
         if ($this->provider == 'google') {
@@ -49,7 +64,11 @@ class DOH {
     }
 
     /**
-     * @see DOHBase::getStatus
+     * Get the status for the last DNS query
+     * 
+     * Inhrerited from {@see DOHBase::getStatus()}
+     * 
+     * @return int Status for the last query
      */
     function getStatus(): int {
         if ($this->provider == 'google') {

@@ -3,19 +3,12 @@
 declare(strict_types=1);
 
 /**
- * This class implements a DNS resolver that asks a DNS over HTTPS service instead of a regular DNS server.
- * 
- * The constructor accept one parameter: The DNSoverHTTPS provider.
- * Actually, there are two possible providers: "cloudflare" and "google".
- * 
  * DNS over HTTPS client library
  * 
- * If not parameter is provided, default one will be used.
+ * This class implements a DNS resolver that asks a DNS over HTTPS service instead of a regular DNS server.
+ * This is an abstract class that must not be used directly, instead use
+ * {@see DOHGG} to use Google as a DOH backend or {@see DOHCF} to use Cloudflare as a DOH backend}
  * 
- * The default DNSoHTTPS provider can be supplied with an optional global
- * constant: DOH_PROVIDER. If the constant is not provided, 
- * hardcoded default is cloudflare.
- *
  * @see https://github.com/sirmonti/doh/ DOH github project
  * 
  * @author Francisco Monteagudo <francisco@monteagudo.net>
@@ -209,17 +202,16 @@ abstract class DOHBase {
      *    - 3: The domain does not exist
      *    - 4: Network error
      *    - 5: Lame response
-     *  - 101: Invalid IP address provided
      * - 10XX: Values above 1000 contains error code returned by DNS server
      *
-     *  This errors generate an exception of type InvalidArgumentException with
-     * the following codes:
+     *  Invalid argument errors generate an exception of type InvalidArgumentException with
+     * one of the following codes:
      * 
      *  - 100: Invalid record type
      *  - 101: Invalid IP address
      *
      * @param  string $domain Name to resolve
-     * @param  string $type Record type to ask
+     * @param  string $type Record type to ask for
      * @param string $how (optional) Indicates whether the connection will be via IPv4 or IPv6 (default is IPv4)
      * @return array<string,string>  array con el resultado de la operación
      * @throws InvalidArgumentException on no valid parameters

@@ -83,8 +83,11 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    DOH
+    DOHCF
 
+        <span class="phpdocumentor-element__extends">
+        extends <a href="classes/DOHBase.html"><abbr title="\DOHBase">DOHBase</abbr></a>
+    </span>
     
             <div class="phpdocumentor-element__package">
             in package
@@ -102,13 +105,13 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/DOH.php"><a href="files/src-doh.html"><abbr title="src/DOH.php">DOH.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/DOHCF.php"><a href="files/src-dohcf.html"><abbr title="src/DOHCF.php">DOHCF.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">10</span>
+    <span class="phpdocumentor-element-found-in__line">6</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Wrapper class to provide compatibility with old software</p>
+            <p class="phpdocumentor-summary">DOH resolver that uses CloudFlare as a backend</p>
 
 
 
@@ -117,7 +120,7 @@
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/DOH.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/DOHCF.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -127,68 +130,35 @@
 
 
 
-<h4 id="toc-constants">
-    Constants
-    <a href="classes/DOH.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
-
-</h4>
-<dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/DOH.html#constant_DEFPROVIDER">DEFPROVIDER</a>
-    <span>
-        &nbsp;= &#039;cloudflare&#039;                            </span>
-</dt>
-<dd>Default DOH provider. Valid values are &quot;cloudflare&quot; or &quot;google&quot;.</dd>
-
-    </dl>
 
 
-<h4 id="toc-properties">
-    Properties
-    <a href="classes/DOH.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
-
-</h4>
-<dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/DOH.html#property_status">$status</a>
-    <span>
-                        &nbsp;: int            </span>
-</dt>
-
-    </dl>
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/DOH.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/DOHCF.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/DOH.html#method___construct">__construct()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/DOH.html#method_dns">dns()</a>
+    <a href="classes/DOHCF.html#method_dns">dns()</a>
     <span>
                                 &nbsp;: array&lt;string, string&gt;    </span>
 </dt>
 <dd>Execute a DNS query</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/DOH.html#method_getStatus">getStatus()</a>
+    <a href="classes/DOHBase.html#method_getStatus">getStatus()</a>
     <span>
                                 &nbsp;: int    </span>
 </dt>
 <dd>Get the status for the last DNS query</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/DOH.html#method_iPtoDNS">iPtoDNS()</a>
+    <a href="classes/DOHBase.html#method_IPtoDNS">IPtoDNS()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
-<dd>Convert IP address to a DNS representation</dd>
+<dd>Convert an IPv4 or IPv6 address to a DNS name valid for a PTR request.</dd>
 
     </dl>
 
@@ -196,152 +166,30 @@
 
 
         
-    <section class="phpdocumentor-constants">
-        <h3 class="phpdocumentor-elements__header" id="constants">
-            Constants
-            <a href="classes/DOH.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h3>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_DEFPROVIDER">
-        DEFPROVIDER
-        <a href="classes/DOH.html#constant_DEFPROVIDER" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/DOH.php"><a href="files/src-doh.html"><abbr title="src/DOH.php">DOH.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">17</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Default DOH provider. Valid values are &quot;cloudflare&quot; or &quot;google&quot;.</p>
-
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">DEFPROVIDER</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;cloudflare&#039;</span>
-</code>
-
-
-        <section class="phpdocumentor-description"><p>You can edit this constant, but we recommend to use the global
-DOH_PROVIDER constant.</p>
-</section>
-
-    
-    
-
-</article>
-            </section>
 
         
-    <section class="phpdocumentor-properties">
-        <h3 class="phpdocumentor-elements__header" id="properties">
-            Properties
-            <a href="classes/DOH.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h3>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                -read-only        "
->
-    <h4 class="phpdocumentor-element__name" id="property_status">
-        $status
-        <a href="classes/DOH.html#property_status" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/DOH.php"><a href="files/src-doh.html"><abbr title="src/DOH.php">DOH.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">$status</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Status code for the last query. Deprecated, use instead <a href="classes/DOH.html#method_getStatus"><abbr title="\DOH::getStatus()">DOH::getStatus()</abbr></a></p>
-</section>
-
-    
-    
-
-</article>
-            </section>
 
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/DOH.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/DOHCF.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
         class="phpdocumentor-element
             -method
             -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method___construct">
-        __construct()
-        <a href="classes/DOH.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/DOH.php"><a href="files/src-doh.html"><abbr title="src/DOH.php">DOH.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">22</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$provider</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$provider</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
+                                    -static                    "
 >
     <h4 class="phpdocumentor-element__name" id="method_dns">
         dns()
-        <a href="classes/DOH.html#method_dns" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/DOHCF.html#method_dns" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/DOH.php"><a href="files/src-doh.html"><abbr title="src/DOH.php">DOH.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/DOHCF.php"><a href="files/src-dohcf.html"><abbr title="src/DOHCF.php">DOHCF.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">59</span>
+    <span class="phpdocumentor-element-found-in__line">27</span>
 
     </aside>
 
@@ -349,11 +197,11 @@ DOH_PROVIDER constant.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">dns</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$domain</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$how</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;ipv4&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, string&gt;</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">dns</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$domain</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$how</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;ipv4&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, string&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-        <section class="phpdocumentor-description"><p>Inherited from <a href="classes/DOHBase.html#method_dns"><abbr title="\DOHBase::dns()">DOHBase::dns()</abbr></a></p>
+        <section class="phpdocumentor-description"><p>Inherited from <abbr title="\DOHBase::dns">DOHBase::dns</abbr></p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -390,7 +238,7 @@ DOH_PROVIDER constant.</p>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/DOH.html#method_dns#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/DOHCF.html#method_dns#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -420,17 +268,17 @@ DOH_PROVIDER constant.</p>
         class="phpdocumentor-element
             -method
             -public
-                                                        "
+                                    -static                    "
 >
     <h4 class="phpdocumentor-element__name" id="method_getStatus">
         getStatus()
-        <a href="classes/DOH.html#method_getStatus" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/DOHBase.html#method_getStatus" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/DOH.php"><a href="files/src-doh.html"><abbr title="src/DOH.php">DOH.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/DOHBase.php"><a href="files/src-dohbase.html"><abbr title="src/DOHBase.php">DOHBase.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">73</span>
+    <span class="phpdocumentor-element-found-in__line">184</span>
 
     </aside>
 
@@ -438,13 +286,11 @@ DOH_PROVIDER constant.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getStatus</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">getStatus</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-        <section class="phpdocumentor-description"><p>Inhrerited from <a href="classes/DOHBase.html#method_getStatus"><abbr title="\DOHBase::getStatus()">DOHBase::getStatus()</abbr></a></p>
-</section>
-
+    
     
     
 
@@ -452,7 +298,7 @@ DOH_PROVIDER constant.</p>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">int</span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>Status for the last query</p>
+                <section class="phpdocumentor-description"><p>Status for the last operacion</p>
 </section>
 
             </section>
@@ -464,29 +310,27 @@ DOH_PROVIDER constant.</p>
             -public
                                     -static                    "
 >
-    <h4 class="phpdocumentor-element__name" id="method_iPtoDNS">
-        iPtoDNS()
-        <a href="classes/DOH.html#method_iPtoDNS" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_IPtoDNS">
+        IPtoDNS()
+        <a href="classes/DOHBase.html#method_IPtoDNS" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/DOH.php"><a href="files/src-doh.html"><abbr title="src/DOH.php">DOH.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/DOHBase.php"><a href="files/src-dohbase.html"><abbr title="src/DOHBase.php">DOHBase.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">164</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Convert IP address to a DNS representation</p>
+        <p class="phpdocumentor-summary">Convert an IPv4 or IPv6 address to a DNS name valid for a PTR request.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">iPtoDNS</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ip</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">IPtoDNS</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ip</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-        <section class="phpdocumentor-description"><p>Inhrerited from <a href="classes/DOHBase.html#method_IPtoDNS"><abbr title="\DOHBase::IPtoDNS()">DOHBase::IPtoDNS()</abbr></a></p>
-</section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -518,7 +362,7 @@ DOH_PROVIDER constant.</p>
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/DOH.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/DOHCF.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -617,32 +461,17 @@ DOH_PROVIDER constant.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                        <li><a href="classes/DOH.html#toc-constants">Constants</a></li>
-                                                            <li><a href="classes/DOH.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/DOH.html#toc-methods">Methods</a></li>
+                                                                                <li><a href="classes/DOHCF.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
-                            <li class="phpdocumentor-on-this-page-section__title">Constants</li>
-                <li>
-                    <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="classes/DOH.html#constant_DEFPROVIDER">DEFPROVIDER</a></li>
-                                            </ul>
-                </li>
             
-                            <li class="phpdocumentor-on-this-page-section__title">Properties</li>
-                <li>
-                    <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="classes/DOH.html#property_status">$status<a href="classes/DOH.html"></li>
-                                            </ul>
-                </li>
             
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                            <li><a href="classes/DOH.html#method___construct">__construct()</a></li>
-                                            <li><a href="classes/DOH.html#method_dns">dns()</a></li>
-                                            <li><a href="classes/DOH.html#method_getStatus">getStatus()</a></li>
-                                            <li><a href="classes/DOH.html#method_iPtoDNS">iPtoDNS()</a></li>
+                                            <li><a href="classes/DOHCF.html#method_dns">dns()</a></li>
+                                            <li><a href="classes/DOHBase.html#method_getStatus">getStatus()</a></li>
+                                            <li><a href="classes/DOHBase.html#method_IPtoDNS">IPtoDNS()</a></li>
                                     </ul>
             </li>
                     </ul>
@@ -662,7 +491,7 @@ DOH_PROVIDER constant.</p>
     </section>
 </section>
         </div>
-        <a href="classes/DOH.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/DOHCF.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 
