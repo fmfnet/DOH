@@ -149,7 +149,7 @@ hardcoded default is cloudflare.</p>
                     <span class="phpdocumentor-tag__name">version</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">2.1.0</span>
+                                            <span class="phpdocumentor-tag-link">2.5.0</span>
                                                                                 
                                              
                                     </dd>
@@ -238,6 +238,13 @@ hardcoded default is cloudflare.</p>
 <dd>Execute a DNS query. The query return an array with the responses. In case
 of error the function returns an empty array and set &quot;status&quot; attribute
 with the error code.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/DOH.html#method_getStatus">getStatus()</a>
+    <span>
+                                &nbsp;: int    </span>
+</dt>
+<dd>Get the status code for the last query</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/DOH.html#method_IPtoDNS">IPtoDNS()</a>
@@ -356,7 +363,7 @@ DOH_PROVIDER constant.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/DOH.php"><a href="files/src-doh.html"><abbr title="src/DOH.php">DOH.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">94</span>
 
     </aside>
 
@@ -417,7 +424,7 @@ DOH_PROVIDER constant.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/DOH.php"><a href="files/src-doh.html"><abbr title="src/DOH.php">DOH.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">243</span>
+    <span class="phpdocumentor-element-found-in__line">263</span>
 
     </aside>
 
@@ -427,7 +434,7 @@ with the error code.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">dns</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dominio</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tipo</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, string&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">dns</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dominio</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, string&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -459,16 +466,16 @@ the following codes:</p>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Dominio a comprobar</p>
+                    <section class="phpdocumentor-description"><p>Name to resolver</p>
 </section>
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$tipo</span>
+                <span class="phpdocumentor-signature__argument__name">$type</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Tipo de registro</p>
+                    <section class="phpdocumentor-description"><p>Register type</p>
 </section>
 
             </dd>
@@ -497,7 +504,47 @@ the following codes:</p>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">array&lt;string, string&gt;</span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>array con el resultado de la operación</p>
+                <section class="phpdocumentor-description"><p>array Query result</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getStatus">
+        getStatus()
+        <a href="classes/DOH.html#method_getStatus" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/DOH.php"><a href="files/src-doh.html"><abbr title="src/DOH.php">DOH.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">229</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get the status code for the last query</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getStatus</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">int</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The status code for the last query</p>
 </section>
 
             </section>
@@ -517,7 +564,7 @@ the following codes:</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/DOH.php"><a href="files/src-doh.html"><abbr title="src/DOH.php">DOH.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">198</span>
+    <span class="phpdocumentor-element-found-in__line">209</span>
 
     </aside>
 
@@ -686,6 +733,7 @@ the following codes:</p>
                 <ul class="phpdocumentor-list -clean">
                                             <li><a href="classes/DOH.html#method___construct">__construct()</a></li>
                                             <li><a href="classes/DOH.html#method_dns">dns()</a></li>
+                                            <li><a href="classes/DOH.html#method_getStatus">getStatus()</a></li>
                                             <li><a href="classes/DOH.html#method_IPtoDNS">IPtoDNS()</a></li>
                                     </ul>
             </li>

@@ -16,6 +16,11 @@ Search.appendIndex(
             "summary": "Convert\u0020an\u0020IPv4\u0020or\u0020IPv6\u0020address\u0020to\u0020a\u0020DNS\u0020name\u0020valid\u0020for\u0020a\u0020PTR\u0020request.",
             "url": "classes/DOH.html#method_IPtoDNS"
         },                {
+            "fqsen": "\\DOH\u003A\u003AgetStatus\u0028\u0029",
+            "name": "getStatus",
+            "summary": "Get\u0020the\u0020status\u0020code\u0020for\u0020the\u0020last\u0020query",
+            "url": "classes/DOH.html#method_getStatus"
+        },                {
             "fqsen": "\\DOH\u003A\u003Adns\u0028\u0029",
             "name": "dns",
             "summary": "Execute\u0020a\u0020DNS\u0020query.\u0020The\u0020query\u0020return\u0020an\u0020array\u0020with\u0020the\u0020responses.\u0020In\u0020case\nof\u0020error\u0020the\u0020function\u0020returns\u0020an\u0020empty\u0020array\u0020and\u0020set\u0020\u0022status\u0022\u0020attribute\nwith\u0020the\u0020error\u0020code.",

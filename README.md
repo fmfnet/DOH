@@ -101,7 +101,7 @@ $doh=new DOH;
 $resp = $doh->dns('google.com','TXT'); // Query with a multiple response
 echo "\nResponse TXT query:\n";
 print_r($resp);
-printf("DNS response status code: %d\n",$doh->status);
+printf("DNS response status code: %d\n",$doh->getStatus());
 ```
 The script produces this response
 ```
@@ -127,7 +127,7 @@ $doh=new DOH;
 $resp = $doh->dns('nonexistentdomain.test','TXT'); // Query with an invalid response
 echo "\nResponse TXT query:\n";
 print_r($resp);
-printf("DNS response status code: %d\n",$doh->status);
+printf("DNS response status code: %d\n",$doh->getStatus());
 ```
 The script produces this response
 ```
