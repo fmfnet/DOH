@@ -3,9 +3,14 @@
 declare(strict_types=1);
 
 /**
- * Wrapper class to provide compatibility with old software
+ * @package Deprecated
+ */
+/**
+ * Wrapper class provided for compatibility with old software. Deprecated.
  * 
- * @property-read int $status Status code for the last query. Deprecated, use instead {@see DOH::getStatus()}
+ * This class is {@deprecated 3.0.0} deprecated. Consider using the new classes {@see DOHCF} or {@see DOHGG}
+ * 
+ * @property-read int $status Status code for the last query.
  */
 class DOH {
 

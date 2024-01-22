@@ -3,7 +3,7 @@ Search.appendIndex(
                 {
             "fqsen": "\\DOH",
             "name": "DOH",
-            "summary": "Wrapper\u0020class\u0020to\u0020provide\u0020compatibility\u0020with\u0020old\u0020software",
+            "summary": "Wrapper\u0020class\u0020provided\u0020for\u0020compatibility\u0020with\u0020old\u0020software.\u0020Deprecated.",
             "url": "classes/DOH.html"
         },                {
             "fqsen": "\\DOH\u003A\u003A__construct\u0028\u0029",

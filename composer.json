@@ -14,7 +14,7 @@
         }
     ],
     "autoload": {
-        "files": ["src/DOH.php"]
+        "classmap": ["src"]
     },
     "minimum-stability": "stable",
     "require": {

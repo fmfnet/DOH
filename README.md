@@ -9,11 +9,12 @@
 DNS resolve is a well known function that is implemented in all operating systems, then, Why we need a different way to do it?
 The main reason is privacy, standard DNS protocol don't encrypt connections, which means DNS requests can be spied and forged.
 
-But there are other reasons; first, DOH is very fast, more fast than a lot of local servers. This is not very surprisingly if you consider that cloudflare
+But there are other reasons; first, DOH is fast, more fast than a lot of local servers. This is not very surprisingly if you consider that cloudflare
 and google (the main DOH providers) have huge network infraestructures. But there are more, DOH provides a more descriptive errors. For example,
 standard DNS servers can misinterpret network errors as nonexistent records. DOH will correctly report the error.
 
-If you need a fast and reliable DNS name resolution, DOH provides a better solution than standard DNS servers.
+If you need a fast and reliable DNS name resolution, If you need fast and reliable name resolution, more precisely, if you need bulk name resolution,
+DOH provides a better solution than standard DNS servers.
 
 ## Install
 
@@ -25,26 +26,33 @@ composer require sirmonti/doh
 
 ## Usage
 
-Actually, the library supports two DoH providers: "cloudflare" and "google".
-The providers are accessed through these URIs:
-- cloudflare: https://cloudflare-dns.com/dns-query
-- google: https://cloudflare-dns.com/dns-query
+Actually, the library supports two DoH providers, cloudflare and google.
+The support is implemented across two wrapper classes:
 
-Functions and parameters:
+- DOHGG: Resolves names via google
+- DOHCF: Resolves names via cloudflare
+
+There isn't any differente to use one class or another. The only reason to
+prefer one or the other is the sympathy you have for the company.
+
+The classes are called statically, there is no need to create an object.
+For example, if you want to get the IP address for www.google.com using
+google backend, the call will be:
+```php
+$ipaddresses=DOHGG::dns('www.google.com','A');
+```
+If you have more sympathy for cloudflare, you can use it as a backend
+```php
+$ipaddresses=DOHCF::dns('www.google.com','A');
+```
+
+The classes have the following methods:
 
 |function|Description|
 |---|---|
-|DOH_PROVIDER|Optional global constant to define a default provider|
-|contructor($provider)|Create DOH object. The optional parameter "$provider" can be "cloudflare" or "google"|
+|IPtoDNS($ip)|Convert an IP address to a DNS encoding valid for PTR querys|
 |dns($name,$type)|Resolve a DNS query. $name is the name to resolve and $type is the record type searched|
-|$status|This property stores the status code for the last operation|
-|getStatus()|If you prefer to get the status code using a method call|
-
-The DoH provider is taken in this order:
-- The constructor parameter
-- The global constant DOH_PROVIDER
-- The hardcoded default (Actually, "cloudflare"). Can be changed
-  editing the class constant DEFPROVIDER in the source code
+|getStatus()|Get the status code for the last query|
 
 ## DNS resolution
 
@@ -80,11 +88,10 @@ On invalid parameters an InvalidArgumentException will be fired with
 ## Examples
 
 ```php
-$doh = new DOH('cloudflare'); // Will use cloudflare as resolver
-$resp = $doh->dns('www.google.com','A'); // Query with a single response
+$resp = DOHCF::dns('www.google.com','A'); // Query cloudflare with a single response
 echo "\nResponse A query:\n";
 print_r($resp);
-printf("DNS response status code: %d\n",$doh->status);
+printf("DNS response status code: %d\n",DOHCF::getStatus());
 ```
 
 The script produces this response
@@ -99,12 +106,10 @@ DNS response status code: 0
 In this example, we use the DOH_PROVIDER constant to set the resolver
 
 ```php
-define('DOH_PROVIDER','google');
-$doh=new DOH;
-$resp = $doh->dns('google.com','TXT'); // Query with a multiple response
+$resp = DOHGG:dns('google.com','TXT'); // Query with a multiple response
 echo "\nResponse TXT query:\n";
 print_r($resp);
-printf("DNS response status code: %d\n",$doh->getStatus());
+printf("DNS response status code: %d\n",DOHGG::getStatus());
 ```
 The script produces this response
 ```
@@ -126,11 +131,10 @@ DNS response status code: 0
 
 Example for a bogus query. We use the hardcoded default resolver
 ```php
-$doh=new DOH;
-$resp = $doh->dns('nonexistentdomain.test','TXT'); // Query with an invalid response
+$resp = DOHCF::dns('nonexistentdomain.test','TXT'); // Query with an invalid response
 echo "\nResponse TXT query:\n";
 print_r($resp);
-printf("DNS response status code: %d\n",$doh->getStatus());
+printf("DNS response status code: %d\n",DOHCF::getStatus());
 ```
 The script produces this response
 ```

@@ -1,5 +1,8 @@
 <?php
-
+declare(strict_types=1);
+/**
+ * @package DOH
+ */
 /**
  * DOH resolver that uses CloudFlare as a backend
  */

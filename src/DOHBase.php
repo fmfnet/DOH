@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 /**
+ * @package DOH
+ */
+/**
  * DNS over HTTPS client library
  * 
  * This class implements a DNS resolver that asks a DNS over HTTPS service instead of a regular DNS server.
