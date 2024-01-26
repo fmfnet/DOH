@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * @package Deprecated
+ * @package Compatibility
  */
 /**
  * Wrapper class provided for compatibility with old software. Deprecated.
@@ -52,7 +52,7 @@ class DOH {
      * @param string $ip IP address to convert
      * @return string DNS name representing the IP
      */
-    static function iPtoDNS(string $ip): string {
+    static function IPtoDNS(string $ip): string {
         return DOHBase::IPtoDNS($ip);
     }
 
@@ -64,7 +64,7 @@ class DOH {
      * @param  string $domain Name to resolve
      * @param  string $type Record type to ask for
      * @param string $how (optional) Indicates whether the connection will be via IPv4 or IPv6 (default is IPv4)
-     * @return array<string,string>  array con el resultado de la operación
+     * @return array<string,string>  Query result
      * @throws InvalidArgumentException on no valid parameters
      */
     function dns(string $domain, string $type, string $how = 'ipv4'): array {

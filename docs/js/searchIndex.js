@@ -11,10 +11,10 @@ Search.appendIndex(
             "summary": "Build\u0020DOH\u0020object",
             "url": "classes/DOH.html#method___construct"
         },                {
-            "fqsen": "\\DOH\u003A\u003AiPtoDNS\u0028\u0029",
-            "name": "iPtoDNS",
+            "fqsen": "\\DOH\u003A\u003AIPtoDNS\u0028\u0029",
+            "name": "IPtoDNS",
             "summary": "Convert\u0020IP\u0020address\u0020to\u0020a\u0020DNS\u0020representation",
-            "url": "classes/DOH.html#method_iPtoDNS"
+            "url": "classes/DOH.html#method_IPtoDNS"
         },                {
             "fqsen": "\\DOH\u003A\u003Adns\u0028\u0029",
             "name": "dns",
