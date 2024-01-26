@@ -16,6 +16,8 @@ standard DNS servers can misinterpret network errors as nonexistent records. DOH
 If you need a fast and reliable DNS name resolution, If you need fast and reliable name resolution, more precisely, if you need bulk name resolution,
 DOH provides a better solution than standard DNS servers.
 
+Complete documentation in the [github.io page](https://sirmonti.github.io/DOH/)
+
 ## Install
 
 Vía composer
